@@ -5,3 +5,4 @@ resources:
   - ../../base/linkding/
   - cloudflared.yaml
   - linkding-dotenv.yaml
+  - tunnel-credentials.yaml

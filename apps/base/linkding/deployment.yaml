@@ -18,11 +18,17 @@ spec:
 
           ports:
             - containerPort: 9090
+
           volumeMounts:
             - name: linkding-data
               mountPath: /etc/linkding/data
+
           securityContext:
             allowPrivilegeEscalation: false
+
+          envFrom:
+            - secretRef:
+                name: linkding-dotenv
       volumes:
         - name: linkding-data
           persistentVolumeClaim:

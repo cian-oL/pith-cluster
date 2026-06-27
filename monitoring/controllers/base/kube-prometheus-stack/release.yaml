@@ -26,3 +26,9 @@ spec:
   valuesFrom:
     - kind: Secret
       name: grafana-values
+      valuesKey: adminPassword
+      targetPath: grafana.adminPassword
+    - kind: Secret
+      name: grafana-values
+      valuesKey: adminUser
+      targetPath: grafana.adminUser

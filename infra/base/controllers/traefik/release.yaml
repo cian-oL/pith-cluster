@@ -1,0 +1,41 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: traefik
+  namespace: traefik
+spec:
+  chart:
+    spec:
+      chart: traefik
+      sourceRef:
+        kind: HelmRepository
+        name: traefik
+      version: 41.4.0
+  interval: 12h
+  install:
+    crds: Create
+  upgrade:
+    crds: CreateReplace
+  driftDetection:
+    mode: enabled
+    ignore:
+      # ServiceLB/provider writes back
+      - paths: ["/spec/loadBalancerIP"]
+        target:
+          kind: Service
+          name: traefik
+      # Webhooks may add annotations
+      - paths: ["/metadata/annotations"]
+        target:
+          kind: Service
+          name: traefik
+  values:
+    service:
+      type: LoadBalancer
+    ingressClass:
+      enabled: true
+      name: traefik
+      isDefaultClass: true
+    providers:
+      kubernetesIngress:
+        enabled: true
